@@ -1,13 +1,12 @@
 import os
 import datetime
 
-# database import
-from database import Database
+from peewee import *
+
 database = Database([])
 
 from flask_login import UserMixin
 
-from peewee import *
 
 class User(UserMixin, Model):
     first_name = CharField()
@@ -18,4 +17,4 @@ class User(UserMixin, Model):
     last_updated = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
-        database = DATABASE
+        database = database 
