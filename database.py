@@ -1,5 +1,4 @@
 from peewee import *
-from playhouse.db_url import connect
 
 class Database:
 
@@ -10,5 +9,5 @@ class Database:
     # called when the server starts so the db tables are created
     def initialize_tables(self):
         self.DATABASE.connect()
-        self.DATABASE.create_tables([self.db_tables])
+        self.DATABASE.create_tables(self.db_tables)
         self.DATABASE.close()
