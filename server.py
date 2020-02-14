@@ -1,0 +1,15 @@
+import os 
+from flask import Flask
+
+class Server:
+
+    def __init__(self, DEBUG, PORT):
+        self.app = Flask(__name__)
+        self.DEBUG = DEBUG
+        self.PORT = PORT
+
+    def start(self): 
+        self.app.run(debug=self.DEBUG, port=self.PORT)
+        print("Server is running on port", self.PORT)
+
+    
