@@ -1,6 +1,8 @@
 import os 
 from flask import Flask
 
+app = Flask(__name__)
+
 class Server:
 
     def __init__(self, DEBUG, PORT):
