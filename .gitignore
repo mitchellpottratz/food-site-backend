@@ -32,3 +32,4 @@ build/
 
 ### python virual enviroment ###
 venv
+.env
