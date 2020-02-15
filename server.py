@@ -1,6 +1,7 @@
 import os 
 from flask import Flask
 from flask_login import LoginManager
+from flask_cors import CORS
 
 # allows flask to access enviroment variables
 from dotenv import load_dotenv
@@ -26,7 +27,7 @@ class Server:
         # sets all fo the blueprints in a list
         self.blueprints = blueprints
 
-        # registers all of the blueprints
+        # registers all of the blueprints and configures CORS for them
         self.register_blueprints()
 
     # sets which url is able to access this application
@@ -40,12 +41,12 @@ class Server:
     def setup_login_manager(self):
         self.login_manager.init_app(self.app)
 
+    # loops through all of the blueprints and registers them with the application
     def register_blueprints(self):
         for blueprint in self.blueprints:
             self.app.register_blueprint(blueprint[0], url_prefix=blueprint[1])
+            CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
 
-    def register_cors(self):
-        pass
 
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
