@@ -80,14 +80,23 @@ def register():
 @users.route('/login', methods=['POST'])
 def login():
 	data = request.get_json()
-
 	try:
 		user = User.get(User.email == data['email'])
 
 		# if the password is correct
 		if check_password_hash(user.password, data['password']):
 			login_user(user)
-		
+
+			user_dict = model_to_dict(user)
+			del user_dict['password']
+
+			return jsonify(
+				data=user_dict,
+				status={
+					'code': 200,
+					'message': 'Successfully logged in'
+				}
+			)
 		# if the password is incorrect
 		else:
 			return jsonify(
@@ -97,7 +106,6 @@ def login():
 					'message': 'Email or password is incorrect.'
 				}
 			)
-
 	# if the provided email does not match any users
 	except DoesNotExist:
 		return jsonify(
