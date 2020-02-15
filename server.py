@@ -1,8 +1,6 @@
 import os 
 from flask import Flask
 
-app = Flask(__name__)
-
 class Server:
 
     def __init__(self, DEBUG, PORT):
@@ -12,7 +10,6 @@ class Server:
 
     def register_blueprint(self, resource, path):
         self.app.register_blueprint(resource, url_prefix=path) 
-
 
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
