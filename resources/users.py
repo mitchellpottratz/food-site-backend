@@ -15,7 +15,7 @@ from playhouse.shortcuts import model_to_dict
 user = Blueprint('user', 'user')
 
 # registration route
-@users.route('/register', methods=['POST'])
+@user.route('/register', methods=['POST'])
 def register():
 	# this is the payload
 	data = request.get_json()
