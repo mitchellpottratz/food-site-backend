@@ -9,5 +9,6 @@ class Database:
     # called when the server starts so the db tables are created
     def initialize_tables(self):
         self.DATABASE.connect()
+        print('tables created')
         self.DATABASE.create_tables(self.db_tables)
         self.DATABASE.close()
