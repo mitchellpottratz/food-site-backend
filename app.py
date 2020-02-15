@@ -22,7 +22,7 @@ server.register_blueprint(users, '/api/v1/users')
 
 
 # gets the app and login_manager objects from the server class so 
-# their decorators can be used
+# their decorators can be used: @app and @login_manager
 app = server.app
 login_manager = server.login_manager
 
@@ -38,14 +38,12 @@ def load_user(user_id):
 # established connection to the database before every request
 @app.before_request
 def before_request():
-    print('before request called')
     g.db = database.DATABASE
     g.db.connect()
 
 # closes the database and returnt the response for every request
 @app.after_request
 def after_request(response):
-    print('after request called')
     g.db.close()
     return response
 

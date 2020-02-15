@@ -15,17 +15,30 @@ from playhouse.shortcuts import model_to_dict
 users = Blueprint('user', 'user')
 
 
-# just for testing
-@users.route('/ping', methods=['GET'])
-def ping():
-	return jsonify(
-		data={},
-		status={
-			'code': 200,
-			'message': 'Users controller is working' 
-		}
-	)
+# Show Route
+# returns a single user queried by their id
+@users.route('/<user_id>', methods=['GET'])
+def get_user(user_id):
+	try:
+		user = User.get(User.id == user_id)
+		user_dict = model_to_dict(user)
+		del user_dict['password']
 
+		return jsonify(
+			data=user_dict,
+			status={
+				'code': 200,
+				'message': 'Successfully found resource.'
+			}
+		)
+	except DoesNotExist:
+		return jsonify(
+			data={},
+			status={
+				'code': 404,
+				'message': 'Resource does not exist.'
+			}
+		)	
 
 # registration route
 @users.route('/register', methods=['POST'])
