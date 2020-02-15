@@ -14,6 +14,11 @@ from resources.users import users
 from models.user import User
 
 # creates an instance of the server and database
+
+# ** blueprints get passed into the Server constructor as a nested list
+# ** Example: [ [blueprint name, blueprint path],
+#               [another blueprint name, another blueprint path] 
+#             ]
 server = Server(True, 3000, [[users, '/api/v1/users']])
 database = Database([User])
 
