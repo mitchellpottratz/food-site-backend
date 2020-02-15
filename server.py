@@ -10,7 +10,7 @@ load_dotenv(dotenv_path)
 
 class Server:
 
-    def __init__(self, DEBUG, PORT):
+    def __init__(self, DEBUG, PORT, resources):
         self.app = Flask(__name__)
         self.login_manager = LoginManager()
         self.DEBUG = DEBUG
@@ -22,6 +22,8 @@ class Server:
 
         # sets up the login manager
         self.setup_login_manager()
+
+        self.resources = resources
 
     # sets which url is able to access this application
     def set_origin(self):
@@ -37,6 +39,8 @@ class Server:
     def register_blueprint(self, resource, path):
         self.app.register_blueprint(resource, url_prefix=path) 
 
+    def register_cors(self):
+        pass
 
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
