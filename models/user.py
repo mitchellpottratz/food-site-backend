@@ -13,6 +13,7 @@ class User(UserMixin, Model):
     password = CharField()
     active = BooleanField(default=False)
     last_updated = DateTimeField(default=datetime.datetime.now)
+    timestamp = DateTimeField(default=datetime.datetime.now)
 
     class Meta:
         database = DATABASE

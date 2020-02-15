@@ -1,5 +1,5 @@
-# import flask
 from flask import g
+from flask_login import LoginManager
 
 # server and databased
 from server import Server
@@ -10,8 +10,6 @@ from resources.users import users
 
 # model imports 
 from models.user import User
-
-from flask_login import LoginManager
 
 # creates an instance of the server and database
 server = Server(True, 3000)
