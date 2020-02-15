@@ -40,6 +40,7 @@ def get_user(user_id):
 			}
 		)	
 
+
 # registration route
 @users.route('/register', methods=['POST'])
 def register():
@@ -73,5 +74,25 @@ def register():
 			data=user_dict,
 			status={'code': 201, 'message': 'Successfully registered {}.'.format(user_dict['email'])}
 		)
+
+
+# Login Route
+@users.route('/login', methods=['POST'])
+def login():
+	data = request.get_json()
+
+	try:
+		user = User.get(User.email == data['email'])
+
+	# if the provided email does not match any users
+	except DoesNotExist:
+		return jsonify(
+			data={},
+			status={
+				'code': 404,
+				'message': 'Email or password is incorrect.'
+			}
+		)
+
 
 
