@@ -2,6 +2,13 @@ import os
 from flask import Flask
 from flask_login import LoginManager, current_user
 
+from dotenv import load_dotenv
+
+
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env') 
+load_dotenv(dotenv_path)
+
+
 class Server:
 
     def __init__(self, DEBUG, PORT):
@@ -11,13 +18,11 @@ class Server:
         self.PORT = PORT
 
         # sets the apps secret key
-        self.app.secet_key = self.set_secret_key()
+        print('secret key:', os.environ['SECRET_KEY'])
+        self.app.secet_key = os.environ['SECRET_KEY']
 
         # sets up the login manager
         self.setup_login_manager()
-
-    def set_secret_key(self):
-        return os.environ['SECRET_KEY']
 
     def setup_login_manager(self):
         self.login_manager.init_app(self.app)
