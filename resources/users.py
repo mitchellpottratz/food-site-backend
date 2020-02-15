@@ -14,6 +14,19 @@ from playhouse.shortcuts import model_to_dict
 # blueprint for User
 users = Blueprint('user', 'user')
 
+
+# just for testing
+@users.route('/ping', methods=['GET'])
+def ping():
+	return jsonify(
+		data={},
+		status={
+			'code': 200,
+			'message': 'Users controller is working' 
+		}
+	)
+
+
 # registration route
 @users.route('/register', methods=['POST'])
 def register():

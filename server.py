@@ -11,7 +11,7 @@ class Server:
         self.PORT = PORT
 
     def register_blueprint(self, resource, path):
-        self.app.register_blueprint(resource, path) 
+        self.app.register_blueprint(resource, url_prefix=path) 
 
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
