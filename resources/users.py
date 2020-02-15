@@ -1,5 +1,5 @@
 # import models here
-from models.users import User
+from models.user import User
 
 from flask import request, jsonify, Blueprint
 from peewee import DoesNotExist

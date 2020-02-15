@@ -13,6 +13,7 @@ class Server:
     def register_blueprint(self, resource, path):
         self.app.register_blueprint(resource, url_prefix=path) 
 
+
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
         print("Server is running on port", self.PORT)
