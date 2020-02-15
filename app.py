@@ -26,7 +26,6 @@ server.register_blueprint(users, '/api/v1/users')
 app = server.app
 login_manager = server.login_manager
 
-
 # required by flask_login for loading users
 @login_manager.user_loader
 def load_user(user_id):
@@ -46,7 +45,6 @@ def before_request():
 def after_request(response):
     g.db.close()
     return response
-
 
 
 if __name__ == '__main__':
