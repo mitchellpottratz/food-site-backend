@@ -14,11 +14,9 @@ from resources.users import users
 from models.user import User
 
 # creates an instance of the server and database
-server = Server(True, 3000)
+server = Server(True, 3000, [[users, '/api/v1/users']])
 database = Database([User])
 
-# register blueprints herre
-server.register_blueprint(users, '/api/v1/users')
 
 
 # gets the app and login_manager objects from the server class so 
