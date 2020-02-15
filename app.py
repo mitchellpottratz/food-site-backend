@@ -8,7 +8,7 @@ server = Server(True, 3000)
 database = Database([])
 
 # resource imports
-from resources.users import User
+from resources.users import 
 
 from flask_login import LoginManager
 

@@ -10,6 +10,9 @@ class Server:
         self.DEBUG = DEBUG
         self.PORT = PORT
 
+    def register_blueprint(resource, path):
+        self.app.register_blueprint(resource, path) 
+
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
         print("Server is running on port", self.PORT)
