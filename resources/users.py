@@ -12,7 +12,7 @@ from flask_login import login_user, current_user, logout_user, login_required
 from playhouse.shortcuts import model_to_dict
 
 # blueprint for User
-user = Blueprint('user', 'user')
+users = Blueprint('user', 'user')
 
 # registration route
 @users.route('/register', methods=['POST'])

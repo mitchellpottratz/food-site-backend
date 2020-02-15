@@ -12,11 +12,13 @@ from flask_login import LoginManager
 
 app = Flask(__name__)
 
+
 server = Server(True, 3000)
 database = Database([])
 
-# api endpoint route
-app.register_blueprint(User, url_prefix='/api/v1/users')
+# register blueprint
+server.register_blueprint(users, '/api/v1/users')
+
 
 if __name__ == '__main__':
     database.initialize_tables()
