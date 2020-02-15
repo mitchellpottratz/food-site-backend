@@ -84,6 +84,20 @@ def login():
 	try:
 		user = User.get(User.email == data['email'])
 
+		# if the password is correct
+		if check_password_hash(user.password, data['password']):
+			login_user(user)
+		
+		# if the password is incorrect
+		else:
+			return jsonify(
+				data={},
+				status={
+					'code': 404,
+					'message': 'Email or password is incorrect.'
+				}
+			)
+
 	# if the provided email does not match any users
 	except DoesNotExist:
 		return jsonify(
