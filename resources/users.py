@@ -1,7 +1,7 @@
 # import models here
 from models.user import User
 
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, session
 from peewee import DoesNotExist
 
 # password and logging in
