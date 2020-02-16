@@ -41,7 +41,7 @@ def get_user(user_id):
 		)	
 
 # registration route
-@user.route('/register', methods=['POST'])
+@users.route('/register', methods=['POST'])
 def register():
 	# this is the payload
 	data = request.get_json()
