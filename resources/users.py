@@ -1,7 +1,7 @@
 # import models here
 from models.user import User
 
-from flask import request, jsonify, Blueprint
+from flask import request, jsonify, Blueprint, session
 from peewee import DoesNotExist
 
 # password and logging in
@@ -40,6 +40,7 @@ def get_user(user_id):
 			}
 		)	
 
+
 # registration route
 @users.route('/register', methods=['POST'])
 def register():
@@ -73,5 +74,47 @@ def register():
 			data=user_dict,
 			status={'code': 201, 'message': 'Successfully registered {}.'.format(user_dict['email'])}
 		)
+
+
+# Login Route
+@users.route('/login', methods=['POST'])
+def login():
+	data = request.get_json()
+	try:
+		user = User.get(User.email == data['email'])
+
+		# if the password is correct
+		if check_password_hash(user.password, data['password']):
+			login_user(user)
+
+			user_dict = model_to_dict(user)
+			del user_dict['password']
+
+			return jsonify(
+				data=user_dict,
+				status={
+					'code': 200,
+					'message': 'Successfully logged in'
+				}
+			)
+		# if the password is incorrect
+		else:
+			return jsonify(
+				data={},
+				status={
+					'code': 404,
+					'message': 'Email or password is incorrect.'
+				}
+			)
+	# if the provided email does not match any users
+	except DoesNotExist:
+		return jsonify(
+			data={},
+			status={
+				'code': 404,
+				'message': 'Email or password is incorrect.'
+			}
+		)
+
 
 
