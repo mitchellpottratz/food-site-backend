@@ -22,8 +22,6 @@ from models.user import User
 server = Server(True, 3000, [[users, '/api/v1/users']])
 database = Database([User])
 
-
-
 # gets the app and login_manager objects from the server class so 
 # their decorators can be used: @app and @login_manager
 app = server.app
