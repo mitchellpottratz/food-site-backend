@@ -32,19 +32,10 @@ def list_restaurants():
 # makes an api call to find restuarants near the users current location
 @restaurants.route('/search', methods=['GET'])
 def search_restaurants():
-    try:
-        street_address = request.args.get('street_address')
-        pickup_radius = request.args.get('pickup_radius')
-        search_term = request.args.get('search_term')
-
-    except KeyError:
-        return jsonify(
-            data={},
-            status={
-                'code': 422,
-                'status': 'Invalid query parameters'
-            }
-        )
+    # gets the query params used for searching for restaurants
+    street_address = request.args.get('street_address')
+    pickup_radius = request.args.get('pickup_radius')
+    search_term = request.args.get('search_term')
 
     # creates the request headers and formats the api url with the correct query parameters
     api_request_headers = {'X-Access-Token': os.environ['API_KEY']}
@@ -56,13 +47,24 @@ def search_restaurants():
     api_response = requests.get(formatted_api_url, headers=api_request_headers)
     parsed_api_response = api_response.json()
 
-    return jsonify(
-        data=parsed_api_response['restaurants'],
-        status={
-            'code': 200,
-            'message': 'Successfully found restaurants.'
-        }
-    )
+    # tries to return the restaurants if their were any found
+    try: 
+        return jsonify(
+            data=parsed_api_response['restaurants'],
+            status={
+                'code': 200,
+                'message': 'Successfully found restaurants.'
+            }
+        ) 
+    # if their are no restaurants found
+    except KeyError:
+        return jsonify(
+            data={},
+            status={
+                'code': 200,
+                'message': 'No restaurants found. Try to increase your pickup radius.'
+            }
+        )
 
 
     
