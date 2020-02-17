@@ -33,22 +33,18 @@ def list_restaurants():
 @restaurants.route('/search', methods=['GET'])
 def search_restaurants():
     try:
-        data = request.get_json()
+        print('api key:', os.environ['API_KEY'])
+        print('request.args is of type:', type(request.args))
+        longitude = request.args.get('longitude')
+        latitude = request.args.get('latitude')
+        search_term = request.args.get('search_term')
 
-        # for filtering the results
-        search_term = data['search_term']
-
-        # the users location
-        longitude = data['longitude']
-        latitude = data['latitude']
-
-    # throws exception if any fields in the request body are missing
     except KeyError:
         return jsonify(
             data={},
             status={
                 'code': 422,
-                'status': 'Invalid request body.'
+                'status': 'Invalid query parameters'
             }
         )
 
@@ -57,7 +53,19 @@ def search_restaurants():
     formatted_api_url = (api_url + '&longitude=' + longitude +
                                    '&latitude=' + latitude + 
                                    '&search=' + search_term)
-                                   
+
+    api_response = requests.get(formatted_api_url, headers=api_request_headers)
+    parsed_api_response = api_response.json()
+    print('parsed api response:', parsed_api_response)
+
+    return jsonify(
+        data=parsed_api_response,
+        status={
+            'code': 200,
+            'message': 'Successfully found restaurants.'
+        }
+    )
+
 
     
     
