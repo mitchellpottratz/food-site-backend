@@ -13,6 +13,7 @@ from resources.users import users
 from resources.restaurants import restaurants
 
 # model imports 
+from models.base import BaseModel
 from models.user import User
 
 # creates an instance of the server and database
@@ -23,7 +24,7 @@ from models.user import User
 #             ]
 server = Server(True, 8000, [[users, '/api/v1/users'],
                              [restaurants, '/api/v1/restaurants']])
-database = Database([User])
+database = Database([BaseModel, User])
 
 # gets the app and login_manager objects from the server class so 
 # their decorators can be used: @app and @login_manager
