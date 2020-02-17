@@ -34,6 +34,8 @@ def list_restaurants():
 def search_restaurants():
     try:
         street_address = request.args.get('street_address')
+        pickup_radius = request.args.get('pickup_radius')
+        search_term = request.args.get('search_term')
 
     except KeyError:
         return jsonify(
@@ -46,13 +48,16 @@ def search_restaurants():
 
     # creates the request headers and formats the api url with the correct query parameters
     api_request_headers = {'X-Access-Token': os.environ['API_KEY']}
-    formatted_api_url = (api_url + '&street-address=' + street_address)
+    formatted_api_url = (api_url + '&street-address=' + street_address +
+                                   '&pickup-radius=' + pickup_radius + 
+                                   '&search=' + search_term)
 
+    # makes a request to the api and parses the response
     api_response = requests.get(formatted_api_url, headers=api_request_headers)
     parsed_api_response = api_response.json()
 
     return jsonify(
-        data=parsed_api_response,
+        data=parsed_api_response['restaurants'],
         status={
             'code': 200,
             'message': 'Successfully found restaurants.'
