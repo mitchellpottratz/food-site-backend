@@ -1,5 +1,5 @@
 # import models here
-from models.users import User
+from models.user import User
 
 from flask import request, jsonify, Blueprint
 from peewee import DoesNotExist
@@ -12,7 +12,33 @@ from flask_login import login_user, current_user, logout_user, login_required
 from playhouse.shortcuts import model_to_dict
 
 # blueprint for User
-user = Blueprint('user', 'user')
+users = Blueprint('user', 'user')
+
+
+# Show Route
+# returns a single user queried by their id
+@users.route('/<user_id>', methods=['GET'])
+def get_user(user_id):
+	try:
+		user = User.get(User.id == user_id)
+		user_dict = model_to_dict(user)
+		del user_dict['password']
+
+		return jsonify(
+			data=user_dict,
+			status={
+				'code': 200,
+				'message': 'Successfully found resource.'
+			}
+		)
+	except DoesNotExist:
+		return jsonify(
+			data={},
+			status={
+				'code': 404,
+				'message': 'Resource does not exist.'
+			}
+		)	
 
 # registration route
 @users.route('/register', methods=['POST'])
