@@ -11,6 +11,7 @@ from database import Database
 # resource imports
 from resources.users import users
 from resources.restaurants import restaurants
+from resources.addresses import addresses
 
 # model imports 
 from models.base import BaseModel
@@ -24,7 +25,8 @@ from models.address import Address
 #               [another blueprint name, another blueprint path] 
 #             ]
 server = Server(True, 8000, [[users, '/api/v1/users'],
-                             [restaurants, '/api/v1/restaurants']])
+                             [restaurants, '/api/v1/restaurants'],
+                             [addresses, '/api/v1/addresses']])
 database = Database([BaseModel, User, Address])
 
 # gets the app and login_manager objects from the server class so 
