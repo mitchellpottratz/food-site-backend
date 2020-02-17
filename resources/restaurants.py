@@ -52,6 +52,13 @@ def search_restaurants():
             }
         )
 
+    # creates the request headers and formats the api url with the correct query parameters
+    api_request_headers = {'X-Access-Token': os.environ['API_KEY']}
+    formatted_api_url = (api_url + '&longitude=' + longitude +
+                                   '&latitude=' + latitude + 
+                                   '&search=' + search_term)
+                                   
+
     
     
 
