@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
+from peewee import DoesNotExist
 
 # model imports 
 from models.address import Address 
@@ -20,6 +21,35 @@ def ping():
 			'message': 'Resource is working.'
 		}
 	)
+
+
+# Index Route
+# this route returns all of the addresses that exist for the current user
+@addresses.route('/', methods=['GET'])
+def get_users_addresses():
+    try:
+        all_addresses = Address.select().where(Address.user == current_user.id)
+
+        # converts the queried addresses to a dictionary
+        all_addresses_dict = [model_to_dict(address) for address in all_addresses]
+
+        return jsonify(
+            data=all_addresses_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resources'
+            }    
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 200,
+                'message': 'Resource does not exist.'
+            }    
+        )
+
 
 
 # Create Route
@@ -42,7 +72,7 @@ def create_address():
         data=new_address_dict,
         status={
             'code': 201,
-            'message': 'New delivery address created'
+            'message': 'New resource created.'
         }
     )
 
