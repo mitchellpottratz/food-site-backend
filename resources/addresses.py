@@ -26,5 +26,8 @@ def ping():
 @addresses.route('/', methods=['POST'])
 @login_required
 def create_address():
-    pass
+    data = request.get_json()
+
+    try:
+        
 

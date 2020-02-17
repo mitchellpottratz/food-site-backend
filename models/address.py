@@ -11,7 +11,7 @@ class Address(BaseModel):
     user = ForeignKeyField(User, backref='addresses')
     name = CharField(max_length=55)
     address = CharField(max_length=255)
-    instructions = CharField(max_length=300)
+    instructions = CharField(max_length=300, null=True)
 
 
 
