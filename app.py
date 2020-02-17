@@ -2,6 +2,7 @@ from flask import g
 from flask_login import current_user
 from models.user import User
 from peewee import DoesNotExist
+from flask_cors import CORS
 
 # server and databased
 from server import Server
