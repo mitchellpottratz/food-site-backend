@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
 
 # model imports 
@@ -10,6 +11,7 @@ addresses = Blueprint('addresses', 'addresses')
 
 # Ping Route
 @addresses.route('/ping', methods=['GET'])
+@login_required
 def ping():
     return jsonify(
 		data={},
@@ -18,3 +20,11 @@ def ping():
 			'message': 'Resource is working.'
 		}
 	)
+
+
+# Create Route
+@addresses.route('/', methods=['POST'])
+@login_required
+def create_address():
+    pass
+
