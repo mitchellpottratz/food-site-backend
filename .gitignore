@@ -33,4 +33,5 @@ build/
 ### python virual enviroment ###
 venv
 .env
-foodsite.sqlite
+*.sqlite
+*.pyc
