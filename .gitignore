@@ -34,3 +34,4 @@ build/
 venv
 .env
 foodsite.sqlite
+__pycache__
