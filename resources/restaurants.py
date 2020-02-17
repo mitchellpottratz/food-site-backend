@@ -8,7 +8,7 @@ import requests
 import json
 
 # blueprint for Restaurant
-restaurants = Blueprint('user', 'user')
+restaurants = Blueprint('restaurants', 'restaurants')
 
 # EatStreet api url
 api_url = 'https://eatstreet.com/publicapi/v1/restaurant/search?method=both'
