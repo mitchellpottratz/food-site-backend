@@ -21,6 +21,9 @@ class Server:
         # sets the apps secret key
         self.app.secret_key = os.environ['SECRET_KEY']
 
+        # sets up cors configuration for the flask app
+        self.setup_cors()
+
         # sets up the login manager
         self.setup_login_manager()
 
@@ -33,9 +36,12 @@ class Server:
     # sets which url is able to access this application
     def set_origin(self):
         if self.DEBUG:
-            return 'http://localhost:3000'
+            return 'http://localhost:3000/'
         else:
             return os.environ['ORIGIN']
+
+    def setup_cors(self):
+        CORS(self.app)
 
     # sets up flask_login
     def setup_login_manager(self):
