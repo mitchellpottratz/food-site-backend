@@ -33,7 +33,7 @@ class Server:
     # sets which url is able to access this application
     def set_origin(self):
         if self.DEBUG:
-            return 'http://localhost:3000'
+            return 'http://localhost:8000'
         else:
             return os.environ['ORIGIN']
 
