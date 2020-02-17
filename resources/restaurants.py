@@ -8,7 +8,10 @@ import requests
 import json
 
 # blueprint for Restaurant
-restaurants = Blueprint('user', 'user')
+restaurants = Blueprint('restaurants', 'restaurants')
+
+# EatStreet api url
+api_url = 'https://eatstreet.com/publicapi/v1/restaurant/search?method=both'
 
 # how to obtain keys out of .env file (API_KEY)
 all_restaurants_token = os.environ['API_KEY']
@@ -23,4 +26,35 @@ def list_restaurants():
     except:
         # return error message if data cannot be processed 
         return jsonify(data={}, status={'code': 500,'message': 'error loading all restaurants'}), 500
+
+
+# Search Route
+# makes an api call to find restuarants near the users current location
+@restaurants.route('/search', methods=['GET'])
+def search_restaurants():
+    try:
+        data = request.get_json()
+
+        # for filtering the results
+        search_term = data['search_term']
+
+        # the users location
+        longitude = data['longitude']
+        latitude = data['latitude']
+
+    # throws exception if any fields in the request body are missing
+    except KeyError:
+        return jsonify(
+            data={},
+            status={
+                'code': 422,
+                'status': 'Invalid request body.'
+            }
+        )
+
+    
+    
+
+
+
 
