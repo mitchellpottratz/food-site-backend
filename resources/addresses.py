@@ -35,6 +35,9 @@ def create_address():
     new_address = Address.create(**data)
     new_address_dict = model_to_dict(new_address)
 
+    # so the users password hash isnt return in the response
+    del new_address_dict['user']['password']
+
     return jsonify(
         data=new_address_dict,
         status={
