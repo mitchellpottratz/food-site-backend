@@ -26,11 +26,12 @@ def ping():
 # Index Route
 # this route returns all of the addresses that exist for the current user
 @addresses.route('/', methods=['GET'])
+@login_required
 def get_users_addresses():
     try:
         all_addresses = Address.select().where(Address.user == current_user.id)
 
-        # converts the queried addresses to a dictionary
+        # converts the address model instances to dictionaries
         all_addresses_dict = [model_to_dict(address) for address in all_addresses]
 
         return jsonify(
@@ -40,7 +41,6 @@ def get_users_addresses():
                 'message': 'Successfully got resources'
             }    
         )
-
     except DoesNotExist:
         return jsonify(
             data={},
