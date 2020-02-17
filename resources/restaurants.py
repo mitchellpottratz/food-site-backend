@@ -23,3 +23,4 @@ def list_restaurants():
     except:
         # return error message if data cannot be processed 
         return jsonify(data={}, status={'code': 500,'message': 'error loading all restaurants'}), 500
+

@@ -20,8 +20,8 @@ from models.user import User
 # ** Example: [ [blueprint name, blueprint path],
 #               [another blueprint name, another blueprint path] 
 #             ]
-server = Server(True, 3000, [[users, '/api/v1/users']])
-server = Server(True, 3000, [[restaurants, '/api/v1/restaurants']])
+server = Server(True, 8000, [[users, '/api/v1/users']])
+server = Server(True, 8000, [[restaurants, '/api/v1/restaurants']])
 database = Database([User])
 
 # gets the app and login_manager objects from the server class so 
