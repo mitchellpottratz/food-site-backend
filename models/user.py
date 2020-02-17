@@ -8,5 +8,5 @@ class User(BaseModel, UserMixin):
     last_name = CharField()
     email = CharField()
     password = CharField()
-    active = BooleanField(default=False)
+    active = BooleanField(default=True)
     
