@@ -33,11 +33,7 @@ def list_restaurants():
 @restaurants.route('/search', methods=['GET'])
 def search_restaurants():
     try:
-        print('api key:', os.environ['API_KEY'])
-        print('request.args is of type:', type(request.args))
-        longitude = request.args.get('longitude')
-        latitude = request.args.get('latitude')
-        search_term = request.args.get('search_term')
+        street_address = request.args.get('street_address')
 
     except KeyError:
         return jsonify(
@@ -50,13 +46,10 @@ def search_restaurants():
 
     # creates the request headers and formats the api url with the correct query parameters
     api_request_headers = {'X-Access-Token': os.environ['API_KEY']}
-    formatted_api_url = (api_url + '&longitude=' + longitude +
-                                   '&latitude=' + latitude + 
-                                   '&search=' + search_term)
+    formatted_api_url = (api_url + '&street-address=' + street_address)
 
     api_response = requests.get(formatted_api_url, headers=api_request_headers)
     parsed_api_response = api_response.json()
-    print('parsed api response:', parsed_api_response)
 
     return jsonify(
         data=parsed_api_response,
