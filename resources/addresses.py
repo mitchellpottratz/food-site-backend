@@ -120,16 +120,15 @@ def delete_address(address_id):
     try: 
         address = Address.select().where(Address.id == address_id)
 
-        
-        deleted_address = Address.delete().where(Address.id == address_id).execute()
-
         return jsonify(
             data={},
             status={
                 'code': 204,
                 'message': 'Resource deleted successfully.'
             }
-        )        
+        ) 
+
+               
     except DoesNotExist:
         return jsonify(
             data={},
