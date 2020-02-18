@@ -1,3 +1,5 @@
+print('in app.py file')
+
 from flask import g
 from flask_login import current_user
 from models.user import User
@@ -45,16 +47,19 @@ def load_user(user_id):
 # established connection to the database before every request
 @app.before_request
 def before_request():
+    print('before request')
     g.db = database.DATABASE
     g.db.connect()
 
 # closes the database and returnt the response for every request
 @app.after_request
 def after_request(response):
+    print('after request')
     g.db.close()
     return response
 
 
 if __name__ == '__main__':
+    print('application started')
     database.initialize_tables()
     server.start()
