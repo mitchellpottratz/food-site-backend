@@ -53,7 +53,9 @@ class Server:
             CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
 
     def start(self): 
-        print('debug:', self.DEBUG)
-        print('port:', self.PORT)
-        self.app.run(debug=self.DEBUG, port=self.PORT)
-        print("Server is running on port", self.PORT)
+        # if the server is running in debug, then the port needs to be specified
+        if self.DEBUG:
+            self.app.run(debug=self.DEBUG, port=self.PORT)
+        # if the server is running in production GCP doesnt need the port passed into the run method
+        else: 
+            self.app.run()
