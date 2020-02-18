@@ -53,5 +53,7 @@ class Server:
             CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
 
     def start(self): 
+        print('debug:', self.DEBUG)
+        print('port:', self.PORT)
         self.app.run(debug=self.DEBUG, port=self.PORT)
         print("Server is running on port", self.PORT)
