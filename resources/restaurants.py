@@ -13,13 +13,10 @@ restaurants = Blueprint('restaurants', 'restaurants')
 # EatStreet api url
 api_url = 'https://eatstreet.com/publicapi/v1/restaurant/search?method=both'
 
-# how to obtain keys out of .env file (API_KEY)
-all_restaurants_token = os.environ['API_KEY']
-
-# route to list all restaurants from api
+# index route -- list all restaurants from api (base will be from Taylor St in Chicago)
 @restaurants.route('/', methods=["GET"])
 def list_restaurants():
-    response = requests.get("https://eatstreet.com/publicapi/v1/restaurant/search?method=both&pickup-radius=100&street-address=520+W+Taylor+St.,+Chicago,+IL", headers={'X-Access-Token': all_restaurants_token})
+    response = requests.get("https://eatstreet.com/publicapi/v1/restaurant/search?method=both&street-address=520+W+Taylor+St.,+Chicago,+IL", headers={'X-Access-Token': os.environ['API_KEY']})
     try:
         data = response.json()
         return jsonify(data=data['restaurants'], status={"code": 200, "message": "successfully loaded all restaurants"}), 200
@@ -66,10 +63,14 @@ def search_restaurants():
             }
         )
 
-
-    
-    
-
-
-
-
+# show route
+@restaurants.route('/<restaurant_api_key>', methods=['GET'])
+def get_single_restaurant(restaurant_api_key):
+    # make api call
+    response = requests.get('https://eatstreet.com/publicapi/v1/restaurant/' + restaurant_api_key, headers={'X-Access-Token': os.environ['API_KEY']})
+    try:
+        data = response.json()
+        return jsonify(data=data, status={"code": 200, "message": "successfully loaded single restaurants"}), 200
+    except:
+        # return error message if data cannot be processed 
+        return jsonify(data={}, status={'code': 500,'message': 'error loading your restaurant'}), 500
