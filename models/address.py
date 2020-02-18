@@ -13,5 +13,11 @@ class Address(BaseModel):
     address = CharField(max_length=255)
     instructions = CharField(max_length=300, null=True)
 
+    # checks if the user id in the parameters is the user of the model instance
+    def user_is_owner(self, user_id):
+        if self.user != user_id:
+            return False
+        return True
+
 
 

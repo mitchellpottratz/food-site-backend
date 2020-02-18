@@ -118,6 +118,9 @@ def update_address(address_id):
 @login_required
 def delete_address(address_id):
     try: 
+        address = Address.select().where(Address.id == address_id)
+
+        
         deleted_address = Address.delete().where(Address.id == address_id).execute()
 
         return jsonify(
