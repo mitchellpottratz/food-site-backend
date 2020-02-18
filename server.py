@@ -55,10 +55,8 @@ class Server:
     def start(self): 
         print('DEBUG:', self.DEBUG)
         # if the server is running in debug, then the port needs to be specified
-        # if self.DEBUG:
-        #     print('in development run block')
-        #     self.app.run(debug=self.DEBUG, port=self.PORT)
+        if self.DEBUG:
+            self.app.run(debug=self.DEBUG, port=self.PORT)
         # if the server is running in production GCP doesnt need the port passed into the run method
-        # else: 
-        print('in production run block')
-        self.app.run()
+        else: 
+            self.app.run()
