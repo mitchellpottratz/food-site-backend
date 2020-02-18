@@ -83,7 +83,7 @@ def create_address():
 @login_required
 def update_address(address_id):
     data = request.get_json()
-    
+
     try:
         address = Address.get(Address.id == address_id)
 
@@ -102,8 +102,6 @@ def update_address(address_id):
                 'message': 'Successfully updated the resource'
             }
         )
-
-    # exception thrown if the queried address does not exist
     except DoesNotExist:
         return jsonify(
             data={},
@@ -112,6 +110,37 @@ def update_address(address_id):
                 'message': 'Resource does not exist.'
             }    
         )
+
+
+# Delete Route
+# deletes a users address
+@addresses.route('/<address_id>', methods=['DELETE'])
+@login_required
+def delete_address(address_id):
+    try: 
+        deleted_address = Address.delete().where(Address.id == address_id).execute()
+
+        return jsonify(
+            data={},
+            status={
+                'code': 204,
+                'message': 'Resource deleted successfully.'
+            }
+        )        
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }    
+        )
+
+
+
+
+
+
 
 
 
