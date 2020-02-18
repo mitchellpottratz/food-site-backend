@@ -55,5 +55,5 @@ class Server:
     def start(self): 
         print('debug:', self.DEBUG)
         print('port:', self.PORT)
-        self.app.run(debug=self.DEBUG, port=self.PORT)
+        self.app.run(debug=self.DEBUG, host='0.0.0.0' port=self.PORT)
         print("Server is running on port", self.PORT)
