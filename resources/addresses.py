@@ -127,8 +127,7 @@ def delete_address(address_id):
                 'message': 'Resource deleted successfully.'
             }
         ) 
-
-               
+     
     except DoesNotExist:
         return jsonify(
             data={},
