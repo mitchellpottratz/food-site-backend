@@ -59,9 +59,8 @@ def after_request(response):
     return response
 
 
-def run():
+if __name__ == '__main__':
     print('application started')
     database.initialize_tables()
-    server.start()
+    app = server.start()
 
-run()
