@@ -73,7 +73,7 @@ def register():
 		return jsonify(
 			data=user_dict,
 			status={'code': 201, 'message': 'Successfully registered {}.'.format(user_dict['email'])}
-		)
+		), 201
 
 
 # Login Route
