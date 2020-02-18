@@ -45,7 +45,7 @@ def get_users_addresses():
         return jsonify(
             data={},
             status={
-                'code': 200,
+                'code': 404,
                 'message': 'Resource does not exist.'
             }    
         )
@@ -75,6 +75,43 @@ def create_address():
             'message': 'New resource created.'
         }
     )
+
+
+# Update Route
+# updates a users address
+@addresses.route('/<address_id>', methods=['PUT'])
+@login_required
+def update_address(address_id):
+    data = request.get_json()
+    
+    try:
+        address = Address.get(Address.id == address_id)
+
+        # updates the address
+        address.name = data['name']
+        address.address = data['address']
+        address.instructions = data['instructions']
+        address.save()
+
+        updated_address_dict = model_to_dict(address)
+
+        return jsonify(
+            data=updated_address_dict,
+            status={
+                'code': 204,
+                'message': 'Successfully updated the resource'
+            }
+        )
+
+    # exception thrown if the queried address does not exist
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }    
+        )
 
 
 
