@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
+from exceptions.resource_access_denied import ResourceAccessDenied
 
 # model imports 
 from models.address import Address 
@@ -45,7 +46,7 @@ def get_users_addresses():
         return jsonify(
             data={},
             status={
-                'code': 200,
+                'code': 404,
                 'message': 'Resource does not exist.'
             }    
         )
@@ -75,6 +76,87 @@ def create_address():
             'message': 'New resource created.'
         }
     )
+
+
+# Update Route
+# updates a users address
+@addresses.route('/<address_id>', methods=['PUT'])
+@login_required
+def update_address(address_id):
+    data = request.get_json()
+
+    try:
+        address = Address.get(Address.id == address_id)
+
+        # checks if the user is the creator of the address, if not an exception is thrown
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
+
+        # updates the address
+        address.name = data['name']
+        address.address = data['address']
+        address.instructions = data['instructions']
+        address.save()
+
+        updated_address_dict = model_to_dict(address)
+
+        return jsonify(
+            data=updated_address_dict,
+            status={
+                'code': 204,
+                'message': 'Successfully updated the resource'
+            }
+        )
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }    
+        )
+
+
+# Delete Route
+# deletes a users address
+@addresses.route('/<address_id>', methods=['DELETE'])
+@login_required
+def delete_address(address_id):
+    try: 
+        address = Address.get(Address.id == address_id)
+
+        # checks if the user is the creator of the address, if not an exception is thrown
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            e.get_json_response()
+
+        return jsonify(
+            data={},
+            status={
+                'code': 204,
+                'message': 'Resource deleted successfully.'
+            }
+        ) 
+     
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 403,
+                'message': 'Resource does not exist'
+            }
+        )
+
+
+
+
+
+
 
 
 
