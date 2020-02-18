@@ -15,6 +15,19 @@ from playhouse.shortcuts import model_to_dict
 users = Blueprint('user', 'user')
 
 
+# Ping Route
+# for testing purposes
+@users.route('/', methods=['GET'])
+def ping():
+	return jsonify(
+		data={},
+		status={
+			'code': 200,
+			'message': 'Resource is working.'
+		}
+	)
+
+
 # Show Route
 # returns a single user queried by their id
 @users.route('/<user_id>', methods=['GET'])
