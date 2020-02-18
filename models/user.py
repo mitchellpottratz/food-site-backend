@@ -1,19 +1,12 @@
-import os
-import datetime
-
 from peewee import *
 from flask_login import UserMixin
+from .base import BaseModel
 
-DATABASE = SqliteDatabase('foodsite.sqlite')
 
-class User(UserMixin, Model):
-    first_name = CharField()
-    last_name = CharField()
-    email = CharField()
-    password = CharField()
-    active = BooleanField(default=False)
-    last_updated = DateTimeField(default=datetime.datetime.now)
-    timestamp = DateTimeField(default=datetime.datetime.now)
-
-    class Meta:
-        database = DATABASE
+class User(BaseModel, UserMixin):
+    first_name = CharField(max_length=55)
+    last_name = CharField(max_length=55)
+    email = CharField(max_length=255)
+    password = CharField(max_length=255)
+    active = BooleanField(default=True)
+    
