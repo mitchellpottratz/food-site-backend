@@ -4,7 +4,7 @@ from flask import jsonify
 This exception is thrown when a user tried to access a resource they do not have the rights to
 '''
 
-class ModelAccessDenied(Exception):
+class ResourceAccessDenied(Exception):
 
     def __init__(self):
         pass
@@ -14,7 +14,7 @@ class ModelAccessDenied(Exception):
             data={},
             status={
                 'code': 403,
-                'message': 'Access denied.'
+                'message': 'Resource access denied.'
             }
         )
 

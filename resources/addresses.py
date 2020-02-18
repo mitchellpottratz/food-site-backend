@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
+from exceptions.resource_access_denied import ResourceAccessDenied
 
 # model imports 
 from models.address import Address 
@@ -118,7 +119,11 @@ def update_address(address_id):
 @login_required
 def delete_address(address_id):
     try: 
-        address = Address.select().where(Address.id == address_id)
+        address = Address.get(Address.id == address_id)
+
+        # if the user does not have access to the queried address resource
+        if not address.user_is_owner(current_user.id):
+            raise ResourceAccessDenied()
 
         return jsonify(
             data={},
@@ -128,14 +133,8 @@ def delete_address(address_id):
             }
         ) 
      
-    except DoesNotExist:
-        return jsonify(
-            data={},
-            status={
-                'code': 404,
-                'message': 'Resource does not exist.'
-            }    
-        )
+    except (DoesNotExist, ResourceAccessDenied) as e:
+        return e.get_json_response()
 
 
 
