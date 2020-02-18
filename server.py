@@ -10,7 +10,6 @@ load_dotenv(dotenv_path)
 
 
 class Server:
-
     def __init__(self, DEBUG, PORT, blueprints):
         self.app = Flask(__name__)
         self.login_manager = LoginManager()
@@ -36,7 +35,7 @@ class Server:
     # sets which url is able to access this application
     def set_origin(self):
         if self.DEBUG:
-            return 'http://localhost:3000/'
+            return 'http://localhost:3000'
         else:
             return os.environ['ORIGIN']
 
@@ -53,9 +52,6 @@ class Server:
             self.app.register_blueprint(blueprint[0], url_prefix=blueprint[1])
             CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
 
-
     def start(self): 
         self.app.run(debug=self.DEBUG, port=self.PORT)
         print("Server is running on port", self.PORT)
-
-    
