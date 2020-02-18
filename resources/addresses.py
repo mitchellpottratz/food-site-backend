@@ -88,6 +88,13 @@ def update_address(address_id):
     try:
         address = Address.get(Address.id == address_id)
 
+        # checks if the user is the creator of the address, if not an exception is thrown
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
+
         # updates the address
         address.name = data['name']
         address.address = data['address']
@@ -121,9 +128,12 @@ def delete_address(address_id):
     try: 
         address = Address.get(Address.id == address_id)
 
-        # if the user does not have access to the queried address resource
-        if not address.user_is_owner(current_user.id):
-            raise ResourceAccessDenied()
+        # checks if the user is the creator of the address, if not an exception is thrown
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            e.get_json_response()
 
         return jsonify(
             data={},
@@ -133,8 +143,14 @@ def delete_address(address_id):
             }
         ) 
      
-    except (DoesNotExist, ResourceAccessDenied) as e:
-        return e.get_json_response()
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 403,
+                'message': 'Resource does not exist'
+            }
+        )
 
 
 
