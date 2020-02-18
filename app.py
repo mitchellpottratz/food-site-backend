@@ -24,9 +24,9 @@ from models.address import Address
 # ** Example: [ [blueprint name, blueprint path],
 #               [another blueprint name, another blueprint path] 
 #             ]
-server = Server(True, 8000, [[users, '/api/v1/users'],
-                             [restaurants, '/api/v1/restaurants'],
-                             [addresses, '/api/v1/addresses']])
+server = Server([[users, '/api/v1/users'],
+                 [restaurants, '/api/v1/restaurants'],
+                 [addresses, '/api/v1/addresses']])
 database = Database([BaseModel, User, Address])
 
 # gets the app and login_manager objects from the server class so 

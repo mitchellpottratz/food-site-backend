@@ -10,11 +10,11 @@ load_dotenv(dotenv_path)
 
 
 class Server:
-    def __init__(self, DEBUG, PORT, blueprints):
+    def __init__(self, blueprints):
         self.app = Flask(__name__)
         self.login_manager = LoginManager()
-        self.DEBUG = DEBUG
-        self.PORT = PORT
+        self.DEBUG = os.environ['DEBUG']
+        self.PORT = os.environ['PORT']
         self.origin = self.set_origin()
 
         # sets the apps secret key
