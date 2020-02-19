@@ -43,13 +43,29 @@ def create_users_cart():
 
 # Delete Route
 # this route is where a users cart can be deleted
-@carts.route('/<card_id>', methods=['DELETE'])
+@carts.route('/<cart_id>', methods=['DELETE'])
 @login_required
 def delete_users_cart(cart_id):
     try:
-        cart = Cart.get(id=cart_id):
+        cart = Cart.get(id=cart_id)
 
+        # throws an exception if the user is not the user of the queried cart
+        try:
+            if cart.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            e.get_json_response()
 
+        # deletes the cart the user is verified as the carts user
+        cart.delete_instance()  
+
+        return jsonify(
+            data={},
+            status={
+                'code': 204,
+                'message': 'Resource deleted successfully.'
+            }
+        )    
     except DoesNotExist:
         return jsonify(
             data={},
