@@ -1,6 +1,8 @@
 from peewee import *
 from .base import BaseModel
 from .cart import Cart
+import requests
+import json
 
 
 ''' 
@@ -20,11 +22,14 @@ class FoodItem(BaseModel):
     # the api url to search for a restaurants menu
     API_URL = 'https://eatstreet.com/publicapi/v1/restaurant/'
 
+    # header that needs to be sent in the request to the EatStreet api
+    API_HEADER = {'X-Access-Token': os.environ['API_KEY']}
+
     # this method makes a request to the EatStreet api to check if the provided
     # food item api key matches a valid food item
     @staticmethod
     def does_food_item_exist(restuarant_api_key, food_item_api_key):
-        
+        pass
 
 
 
