@@ -4,4 +4,5 @@ from .user import User
 
 
 class Cart(BaseModel):
-    user = ForeignKeyField(User, backref='cart')
+    user = ForeignKeyField(User, backref='cart', unique=True)
+

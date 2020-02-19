@@ -4,6 +4,9 @@ from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
 from exceptions.resource_access_denied import ResourceAccessDenied
 
+from models.cart import Cart 
+from models.user import User  
+
 carts = Blueprint('carts', 'carts')
 
 
@@ -17,5 +20,9 @@ def ping():
             'Resource': 'IM ALIVE!!!!!!'
         }
     )
+
+
+# Create Route
+
 
 
