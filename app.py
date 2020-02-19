@@ -14,6 +14,7 @@ from database import Database
 from resources.users import users
 from resources.restaurants import restaurants
 from resources.addresses import addresses
+from resources.food_items import food_items
 
 # model imports 
 from models.base import BaseModel
@@ -22,10 +23,13 @@ from models.address import Address
 from models.cart import Cart
 from models.food_item import FoodItem
 
-# creates an instance of the server and database
+# creates an instance of the server
 server = Server([[users, '/api/v1/users'],
                  [restaurants, '/api/v1/restaurants'],
-                 [addresses, '/api/v1/addresses']])
+                 [addresses, '/api/v1/addresses'],
+                 [food_items, '/api/v1/food_items']])
+
+# creates an instance of the database                
 database = Database([BaseModel, User, Address, Cart, FoodItem])
 
 # gets the app and login_manager objects from the server class so 
