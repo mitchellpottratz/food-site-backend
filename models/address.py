@@ -2,6 +2,7 @@ from peewee import *
 from .base import BaseModel
 from .user import User
 
+
 ''' 
 This model is a a delivery address the user can save. Users are able to have multiple
 delivery addresses which can be given a name.
