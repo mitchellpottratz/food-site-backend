@@ -48,14 +48,12 @@ def load_user(user_id):
 # established connection to the database before every request
 @app.before_request
 def before_request():
-    print('before request')
     g.db = database.DATABASE
     g.db.connect()
 
 # closes the database and returnt the response for every request
 @app.after_request
 def after_request(response):
-    print('after request')
     g.db.close()
     return response
 

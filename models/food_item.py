@@ -1,9 +1,9 @@
+import os
 from peewee import *
 from .base import BaseModel
 from .cart import Cart
 import requests
 import json
-
 
 ''' 
 This model represents a food item that is in a users cart from the EatStreet api 
@@ -28,9 +28,14 @@ class FoodItem(BaseModel):
     # this method makes a request to the EatStreet api to check if the provided
     # food item api key matches a valid food item
     @staticmethod
-    def does_food_item_exist(restuarant_api_key, food_item_api_key):
-        pass
+    def get_food_item(restaurant_api_key, food_item_api_key):
+        response = requests.get(FoodItem.API_URL + restaurant_api_key +
+                                '/menu', headers=FoodItem.API_HEADER)
 
+        parsed_response = response.json()
+        print('api response:', response)
+        
+        return parsed_response
 
 
 

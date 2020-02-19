@@ -30,8 +30,19 @@ def ping():
 def create_food_item():
     data = request.get_json()
 
-    try: 
-        
+    restaurant_api_key = data['restaurant_api_key']
+    food_item_api_key = data['food_item_api_key']
+
+    response = FoodItem.get_food_item(restaurant_api_key, food_item_api_key)
+
+    return jsonify(
+        data=response,
+        status={
+            'code': 201,
+            'message': 'Successfully created resource.'
+        }
+    )
+
 
 
     
