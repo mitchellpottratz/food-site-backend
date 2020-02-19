@@ -26,7 +26,7 @@ from models.food_item import FoodItem
 server = Server([[users, '/api/v1/users'],
                  [restaurants, '/api/v1/restaurants'],
                  [addresses, '/api/v1/addresses'],
-                 [food_items, '/api/v1/food_items'],
+                 [food_items, '/api/v1/food-items'],
                  [carts, '/api/v1/carts']])
 
 # creates an instance of the database                

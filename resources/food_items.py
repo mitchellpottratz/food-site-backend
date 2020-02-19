@@ -4,6 +4,9 @@ from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
 from exceptions.resource_access_denied import ResourceAccessDenied
 
+from models.food_item import FoodItem 
+from models.cart import Cart
+
 food_items = Blueprint('food_items', 'food_items')
 
 
@@ -17,6 +20,14 @@ def ping():
             'Resource': 'IM ALIVE!!!!!!'
         }
     )
+
+
+# Create Route
+# this route create a new food item from a food item from a restaurant and adds
+# it to the users cart
+@food_items.route('/', methods=['POST'])
+def create_food_item():
+    
 
 
 
