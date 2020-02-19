@@ -24,18 +24,20 @@ class FoodItem(BaseModel):
 
     # header that needs to be sent in the request to the EatStreet api
     API_HEADER = {'X-Access-Token': os.environ['API_KEY']}
-
-    # this method makes a request to the EatStreet api to check if the provided
-    # food item api key matches a valid food item
+   
+    # makes a request to the EatStreet api to get all of the food item on a restaurants menu
     @staticmethod
-    def get_food_item(restaurant_api_key, food_item_api_key):
+    def get_restaurants_menu(restaurant_api_key):
         response = requests.get(FoodItem.API_URL + restaurant_api_key +
                                 '/menu', headers=FoodItem.API_HEADER)
-
         parsed_response = response.json()
-        print('api response:', response)
-        
         return parsed_response
+
+    # parses the restaurants menu and returns the matching food item
+    @staticmethod
+    def get_food_item(menu, food_item_api_key):
+        pass
+
 
 
 

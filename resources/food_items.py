@@ -22,21 +22,24 @@ def ping():
     )
 
 
-# Create Route
+# Create Route - NOT FINISHED
 # this route create a new food item from a food item from a restaurant and adds
 # it to the users cart
 @food_items.route('/', methods=['POST'])
 @login_required
 def create_food_item():
     data = request.get_json()
-
     restaurant_api_key = data['restaurant_api_key']
     food_item_api_key = data['food_item_api_key']
 
-    response = FoodItem.get_food_item(restaurant_api_key, food_item_api_key)
+    # makes api call to get all the items in the restaurants menu
+    menu = FoodItem.get_restaurants_menu(restaurant_api_key)
+
+    # gets the food item from the resturants menu
+    food_item = FoodItem.get_food_item(menu, food_item_api_key)
 
     return jsonify(
-        data=response,
+        data=menu,
         status={
             'code': 201,
             'message': 'Successfully created resource.'
