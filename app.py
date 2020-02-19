@@ -1,5 +1,3 @@
-print('in app.py file')
-
 from flask import g
 from flask_login import current_user
 from models.user import User
@@ -15,6 +13,7 @@ from resources.users import users
 from resources.restaurants import restaurants
 from resources.addresses import addresses
 from resources.food_items import food_items
+from resources.carts import carts
 
 # model imports 
 from models.base import BaseModel
@@ -27,7 +26,8 @@ from models.food_item import FoodItem
 server = Server([[users, '/api/v1/users'],
                  [restaurants, '/api/v1/restaurants'],
                  [addresses, '/api/v1/addresses'],
-                 [food_items, '/api/v1/food_items']])
+                 [food_items, '/api/v1/food_items'],
+                 [carts, '/api/v1/carts']])
 
 # creates an instance of the database                
 database = Database([BaseModel, User, Address, Cart, FoodItem])
