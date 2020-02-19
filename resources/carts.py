@@ -22,6 +22,42 @@ def ping():
     )
 
 
+# Show Route
+# this route shows a single users cart 
+@carts.route('/<cart_id>', methods=['GET'])
+@login_required
+def show_users_cart(cart_id):
+    try:
+        cart = Cart.get(id=cart_id)
+
+        # throws an exception if the user is not the user of the cart
+        try:
+            if not cart.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
+
+        cart_dict = model_to_dict(cart)
+        del cart_dict['user']['password']
+
+        return jsonify(
+            data=cart_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully found resource.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }
+        )    
+
+
 # Create Route
 # this route creates a new cart for a user
 @carts.route('/', methods=['POST'])
@@ -51,10 +87,10 @@ def delete_users_cart(cart_id):
 
         # throws an exception if the user is not the user of the queried cart
         try:
-            if cart.user_is_owner(current_user.id):
+            if not cart.user_is_owner(current_user.id):
                 raise ResourceAccessDenied()
         except ResourceAccessDenied as e:
-            e.get_json_response()
+            return e.get_json_response()
 
         # deletes the cart the user is verified as the carts user
         cart.delete_instance()  
@@ -70,8 +106,8 @@ def delete_users_cart(cart_id):
         return jsonify(
             data={},
             status={
-                'code': 403,
-                'message': 'Resource does not exist'
+                'code': 404,
+                'message': 'Resource does not exist.'
             }
         )
 

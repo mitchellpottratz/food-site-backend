@@ -39,7 +39,7 @@ def get_users_addresses():
             data=all_addresses_dict,
             status={
                 'code': 200,
-                'message': 'Successfully got resources'
+                'message': 'Successfully found resources'
             }    
         )
     except DoesNotExist:
@@ -147,7 +147,7 @@ def delete_address(address_id):
         return jsonify(
             data={},
             status={
-                'code': 403,
+                'code': 404,
                 'message': 'Resource does not exist'
             }
         )
