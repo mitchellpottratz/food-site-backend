@@ -17,6 +17,15 @@ class FoodItem(BaseModel):
     price = DecimalField()
     quantity = IntegerField()
 
+    # the api url to search for a restaurants menu
+    API_URL = 'https://eatstreet.com/publicapi/v1/restaurant/'
+
+    # this method makes a request to the EatStreet api to check if the provided
+    # food item api key matches a valid food item
+    @staticmethod
+    def does_food_item_exist(restuarant_api_key, food_item_api_key):
+        
+
 
 
 

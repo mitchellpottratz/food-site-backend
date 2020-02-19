@@ -26,7 +26,14 @@ def ping():
 # this route create a new food item from a food item from a restaurant and adds
 # it to the users cart
 @food_items.route('/', methods=['POST'])
+@login_required
 def create_food_item():
+    data = request.get_json()
+
+    try: 
+        
+
+
     
 
 
