@@ -47,7 +47,7 @@ def search_restaurants():
     # tries to return the restaurants if their were any found
     try: 
         return jsonify(
-            data=parsed_api_response['restaurants'],
+            data=parsed_api_response,
             status={
                 'code': 200,
                 'message': 'Successfully found restaurants.'
@@ -74,6 +74,7 @@ def get_single_restaurant(restaurant_api_key):
     except:
         # return error message if data cannot be processed 
         return jsonify(data={}, status={'code': 500,'message': 'error loading your restaurant'}), 500
+
 
 # show route for restaurant menu
 @restaurants.route('/<restaurant_api_key>/menu', methods=['GET'])
