@@ -1,6 +1,6 @@
 import os
 from peewee import *
-from .base import BaseModel
+from .base_food_item import BaseFoodItem
 from .cart import Cart
 import requests
 import json
@@ -9,15 +9,8 @@ import json
 This model represents a food item that is in a users cart from the EatStreet api 
 '''
 
-class FoodItem(BaseModel):
+class FoodItem(BaseFoodItem):
     cart = ForeignKeyField(Cart, backref='food-items')
-    restaurant_api_key = CharField(max_length=155)
-    menu_api_key = CharField(max_length=155)
-    food_item_api_key = CharField(max_length=155)
-    name = CharField(max_length=155)
-    description = CharField(max_length=500)
-    price = DecimalField()
-    instructions = CharField(max_length=500)
 
     # the api url to search for a restaurants menu
     API_URL = 'https://eatstreet.com/publicapi/v1/restaurant/'
