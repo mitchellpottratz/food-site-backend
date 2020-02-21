@@ -9,6 +9,5 @@ class User(BaseModel, UserMixin):
     last_name = CharField(max_length=55)
     email = CharField(max_length=255)
     password = CharField(max_length=255)
-    # favorite_foods = ForeignKeyField(FoodItem, backref='food_items')
     active = BooleanField(default=True)
     
