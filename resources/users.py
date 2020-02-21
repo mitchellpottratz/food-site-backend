@@ -146,5 +146,13 @@ def login():
 # 	except:
 # 		return jsonify(data={}, status={'code': 500,'message': 'error adding your food to your favorite collection'}), 500
 
-	
+# log out route
+@users.route('/logout', methods=["GET"])
+def logout():
+    # get the email of the user
+    email = model_to_dict(current_user)['email']
+    # log out the user
+    logout_user()
+    # return success
+    return jsonify(data={}, status={"code": 200, "message": "Successfully logged out {}".format(email)})
 
