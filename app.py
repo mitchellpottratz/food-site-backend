@@ -20,6 +20,7 @@ from models.base import BaseModel
 from models.user import User
 from models.address import Address
 from models.cart import Cart
+from models.base_food_item import BaseFoodItem
 from models.food_item import FoodItem
 
 # creates an instance of the server
@@ -30,7 +31,7 @@ server = Server([[users, '/api/v1/users'],
                  [carts, '/api/v1/carts']])
 
 # creates an instance of the database                
-database = Database([BaseModel, User, Address, Cart, FoodItem])
+database = Database([BaseModel, User, Address, Cart, BaseFoodItem, FoodItem])
 
 # gets the app and login_manager objects from the server class so 
 # their decorators can be used: @app and @login_manager
