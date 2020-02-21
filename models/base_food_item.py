@@ -20,6 +20,14 @@ class BaseFoodItem(BaseModel):
     price = DecimalField()
     instructions = CharField(max_length=500)
 
+
+    '''
+        *** 
+        Possible will not need this code below but that'll be ultimately decided when 
+        more of the application is developed 
+        ***
+    ''' 
+
     # the api url to search for a restaurants menu
     API_URL = 'https://eatstreet.com/publicapi/v1/restaurant/'
 

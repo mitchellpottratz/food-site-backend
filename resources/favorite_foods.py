@@ -8,7 +8,6 @@ from exceptions.resource_access_denied import ResourceAccessDenied
 from models.favorite_food import FavoriteFood
 from models.user import User
 
-
 favorite_foods = Blueprint('favorite_foods', 'favorite_foods')
 
 
@@ -22,6 +21,34 @@ def ping():
             'message': 'Resource is working.'
         }
     )
+
+
+# Create Route 
+# this route is where users can create a favorite food
+# test restaurant key: a087f8effa313165884225aec137a02a2790e5584fd8fa58
+# test food items: 6884330, 6884403, 6884468
+@favorite_foods.route('/', methods=['POST'])
+@login_required
+def create_favorite_food():
+    data = request.get_json()
+    data['user'] = current_user.id 
+
+    new_favorite_food = FavoriteFood.create(**data)
+    new_favorite_food_dict = model_to_dict(new_favorite_food)
+
+    return jsonify(
+        data=new_favorite_food_dict,
+        status={
+            'code': 201,
+            'message': 'Resource successfully created.'
+        }
+    )
+
+   
+
+
+
+
 
 
 
