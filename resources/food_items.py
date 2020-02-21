@@ -46,6 +46,23 @@ def create_food_item():
         }
     )
 
+# search food items route
+@food_items.route('/search', methods=["POST"])
+# the user does not have to be logged in to search for products
+def find_products():
+	# get the data from the client
+	data = request.get_json()
+	# query all the products by the search string
+	results = FoodItem.select().where(FoodItem.name.contains(data['name']))
+	# iterate over all the searches -- convert to dictionaries
+	results_list = []
+	for result in results:
+		result_dict = model_to_dict(result, backrefs=True, recurse=True)
+		results_list.append(result_dict)
+
+	# return success
+	return jsonify(data=results_list, status={"code": 200, "message": "Successfully got the search results"})
+
 
 
     
