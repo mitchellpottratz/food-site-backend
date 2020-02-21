@@ -1,5 +1,8 @@
+import os
 from peewee import *
 from .base import BaseModel
+import requests
+import json
 
 
 ''' 
