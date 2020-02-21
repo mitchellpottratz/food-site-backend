@@ -111,7 +111,31 @@ def delete_users_cart(cart_id):
             }
         )
 
+# checkout route
+@carts.route('/<cart_id>', methods=["GET"])
+# the user must be logged in
+@login_required
+def get_total_price_of_items(cart_id):
+    try:
+        # get instance of the specific cart that the user is
+        user_cart_instances = (Cart.select().where(Cart.user_id == current_user.id))
 
+        # convert them into dictionaries
+        user_cart_instances_dicts = [model_to_dict(carts) for carts in user_cart_instances]
+
+        # get the prices
+        price_list = []
+
+        for cart in user_cart_instances_dicts:
+            price_list.append(cart['product_id']['price'])
+
+        # return success
+        return jsonify(data=price_list, status={"code": 200, "message": "Success getting all the carts"}), 200
+
+    except models.DoesNotExist:
+
+        # return the error
+        return jsonify(data={}, status={"code": 401, "messsage": "Error getting this resource"}), 401
       
 
 

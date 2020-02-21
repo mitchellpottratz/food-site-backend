@@ -129,5 +129,22 @@ def login():
 			}
 		)
 
+# # post route (favorite a food)
+# @users.route('/favorite_this_food/<food_item_apiKey>', methods=['POST'])
+# def favorite_a_food(food_item_apiKey):
+# 	# data = request.get_json()
+# 	# print("data:", data)
+# 	# find the user that is logged in
+# 	try:
+# 		# first the get the user
+# 		user = User.get(User.email == data['email'])
+# 		# create the favorite food item and add this to the user
+# 		favorite_food = models.User.create(food_item_apiKey=food_item_apiKey)
+# 		# convert to dictionary
+# 		favorite_food_dict = model_to_dict(favorite_food)
+# 		return jsonify(data=favorite_food_dict, status={'code': 201, 'message': 'successfully added food item to your favorite food collection'})
+# 	except:
+# 		return jsonify(data={}, status={'code': 500,'message': 'error adding your food to your favorite collection'}), 500
 
+	
 
