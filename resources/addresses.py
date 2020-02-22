@@ -39,7 +39,7 @@ def get_users_addresses():
             data=all_addresses_dict,
             status={
                 'code': 200,
-                'message': 'Successfully found resources'
+                'message': 'Successfully found resources.'
             }    
         )
     except DoesNotExist:

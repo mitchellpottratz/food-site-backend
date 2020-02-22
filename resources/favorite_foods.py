@@ -23,6 +23,26 @@ def ping():
     )
 
 
+# Index Route
+# this route returns all of the users favorite foods
+@favorite_foods.route('/', methods=['GET'])
+@login_required
+def get_all_favorite_foods():
+    all_favorite_foods = FavoriteFood.select().where(FavoriteFood.user = current_user.id)
+
+    # converts all of the favorite foods model instances to dictionaries
+    all_favorite_foods_dict = [model_to_dict(favorite_food) for favorite_food in all_favorite_foods]
+
+    return jsonify(
+        status=all_favorite_foods_dict,
+        status={
+            'code': 200,
+            'message': 'Successfully found resources.'
+        }
+    )
+
+
+
 # Create Route 
 # this route is where users can create a favorite food
 # test restaurant key: a087f8effa313165884225aec137a02a2790e5584fd8fa58
