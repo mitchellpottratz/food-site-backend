@@ -134,7 +134,8 @@ def delete_address(address_id):
         except ResourceAccessDenied as e:
             return e.get_json_response()
 
-        
+        # after the user of the model instance is verified then its deleted
+        address_to_delete.delete_instance()
 
         return jsonify(
             data={},
