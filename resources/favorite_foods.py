@@ -82,6 +82,32 @@ def create_favorite_food():
             }
         )
 
+
+# Delete Route
+# this route is where users can delete one of their food items
+@favorite_foods.route('/<food_id>', methods=['DELETE'])
+@login_required
+def delete_favorite_food(food_id):
+    try:
+        favorite_food_to_delete = FavoriteFood.get(FavoriteFood.id == food_id)
+        favorite_food_to_delete.delete_instance()
+
+        return jsonify(
+            data={},
+            status={
+                'code': 204,
+                'message': 'Successfully deleted resource.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resources does not exist.'
+            }
+        )
    
 
 

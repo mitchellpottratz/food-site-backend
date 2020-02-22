@@ -16,11 +16,9 @@ class BaseFoodItem(BaseModel):
     food_item_api_key = CharField(max_length=155)
     name = CharField(max_length=155)
     description = CharField(max_length=500, null=True)
-    price = DecimalField()
+    price = FloatField()
     instructions = CharField(max_length=500, null=True)
 
-
-    
 
     
 
