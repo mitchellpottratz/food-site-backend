@@ -35,11 +35,20 @@ def get_users_addresses():
         # converts the address model instances to dictionaries
         all_addresses_dict = [model_to_dict(address) for address in all_addresses]
 
+        # iterates through all the model instances and converts them to a dictionary and removes 
+        # the users password
+        all_addresses_dict = []
+        for address in all_addresses:
+            address_dict = model_to_dict(address)
+            del address_dict['user']['password']
+            all_addresses_dict.append(address_dict)
+
+
         return jsonify(
             data=all_addresses_dict,
             status={
                 'code': 200,
-                'message': 'Successfully found resources'
+                'message': 'Successfully found resources.'
             }    
         )
     except DoesNotExist:
@@ -50,7 +59,6 @@ def get_users_addresses():
                 'message': 'Resource does not exist.'
             }    
         )
-
 
 
 # Create Route
@@ -76,6 +84,42 @@ def create_address():
             'message': 'New resource created.'
         }
     )
+
+
+# Show Route
+# this route is where the user can get one of their addresses
+@addresses.route('/<address_id>', methods=['GET'])
+@login_required
+def show_users_address(address_id):
+    try:
+        address = Address.get(Address.id == address_id)
+
+        # throws a access denied error if the user is not the owner of the address instance
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
+        
+        address_dict = model_to_dict(address)
+        del address_dict['user']['password']
+
+        return jsonify(
+            data=address_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resource.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }    
+        )
 
 
 # Update Route
@@ -126,14 +170,17 @@ def update_address(address_id):
 @login_required
 def delete_address(address_id):
     try: 
-        address = Address.get(Address.id == address_id)
+        address_to_delete = Address.get(Address.id == address_id)
 
         # checks if the user is the creator of the address, if not an exception is thrown
         try:
-            if not address.user_is_owner(current_user.id):
+            if not address_to_delete.user_is_owner(current_user.id):
                 raise ResourceAccessDenied()
         except ResourceAccessDenied as e:
-            e.get_json_response()
+            return e.get_json_response()
+
+        # after the user of the model instance is verified then its deleted
+        address_to_delete.delete_instance()
 
         return jsonify(
             data={},

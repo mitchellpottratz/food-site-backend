@@ -9,7 +9,9 @@ This model represents a food item that the user favorites
 
 
 class FavoriteFood(BaseFoodItem):
-    user = ForeignKeyField(User, backref='favorite foods')
+    user = ForeignKeyField(User, backref='favorite_foods')
 
+
+    
 
     

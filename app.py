@@ -13,6 +13,7 @@ from resources.users import users
 from resources.restaurants import restaurants
 from resources.addresses import addresses
 from resources.food_items import food_items
+from resources.favorite_foods import favorite_foods
 from resources.carts import carts
 
 # model imports 
@@ -29,6 +30,7 @@ server = Server([[users, '/api/v1/users'],
                  [restaurants, '/api/v1/restaurants'],
                  [addresses, '/api/v1/addresses'],
                  [food_items, '/api/v1/food-items'],
+                 [favorite_foods, '/api/v1/favorite-foods'],
                  [carts, '/api/v1/carts']])
 
 # creates an instance of the database                
