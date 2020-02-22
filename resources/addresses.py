@@ -86,6 +86,35 @@ def create_address():
     )
 
 
+# Show Route
+# this route is where the user can get one of their addresses
+@addresses.route('/<address_id>', methods=['GET'])
+@login_required
+def show_users_address(address_id):
+    try:
+        address = Address.get(Address.id == address_id)
+        
+        address_dict = model_to_dict(address)
+        del address_dict['user']['password']
+
+        return jsonify(
+            data=address_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resource.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }    
+        )
+
+
 # Update Route
 # updates a users address
 @addresses.route('/<address_id>', methods=['PUT'])
