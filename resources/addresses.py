@@ -125,14 +125,16 @@ def update_address(address_id):
 @login_required
 def delete_address(address_id):
     try: 
-        address = Address.get(Address.id == address_id)
+        address_to_delete = Address.get(Address.id == address_id)
 
         # checks if the user is the creator of the address, if not an exception is thrown
         try:
-            if not address.user_is_owner(current_user.id):
+            if not address_to_delete.user_is_owner(current_user.id):
                 raise ResourceAccessDenied()
         except ResourceAccessDenied as e:
             return e.get_json_response()
+
+        
 
         return jsonify(
             data={},
