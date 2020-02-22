@@ -35,6 +35,15 @@ def get_users_addresses():
         # converts the address model instances to dictionaries
         all_addresses_dict = [model_to_dict(address) for address in all_addresses]
 
+        # iterates through all the model instances and converts them to a dictionary and removes 
+        # the users password
+        all_addresses_dict = []
+        for address in all_addresses:
+            address_dict = model_to_dict(address)
+            del address_dict['user']['password']
+            all_addresses_dict.append(address_dict)
+
+
         return jsonify(
             data=all_addresses_dict,
             status={
