@@ -30,8 +30,13 @@ def ping():
 def get_all_favorite_foods():
     all_favorite_foods = FavoriteFood.select().where(FavoriteFood.user == current_user.id)
 
-    # converts all of the favorite foods model instances to dictionaries
-    all_favorite_foods_dict = [model_to_dict(favorite_food) for favorite_food in all_favorite_foods]
+    # iterates through all the model instances and converts them to a dictionary and removes 
+    # the users password
+    all_favorite_foods_dict = []
+    for favorite_food in all_favorite_foods:
+        favorite_food_dict = model_to_dict(favorite_food)
+        del favorite_food_dict['user']['password']
+        all_favorite_foods_dict.append(favorite_food_dict) 
 
     return jsonify(
         data=all_favorite_foods_dict,
