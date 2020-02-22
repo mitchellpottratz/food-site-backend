@@ -93,6 +93,13 @@ def create_address():
 def show_users_address(address_id):
     try:
         address = Address.get(Address.id == address_id)
+
+        # throws a access denied error if the user is not the owner of the address instance
+        try:
+            if not address.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
         
         address_dict = model_to_dict(address)
         del address_dict['user']['password']
