@@ -88,6 +88,35 @@ def create_favorite_food():
         )
 
 
+# Show Route
+# this route is where user can get one of their favorite food items
+@favorite_foods.route('/<food_id>', methods=['GET'])
+@login_required
+def show_favorite_food(food_id):
+    try:
+        favorite_food = FavoriteFood.get(FavoriteFood.id == food_id)
+    
+        favorite_food_dict = model_to_dict(favorite_food)
+        del favorite_food_dict['user']['password']
+
+        return jsonify(
+            data=favorite_food_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resource.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resources does not exist.'
+            }
+        )
+
+
 # Delete Route
 # this route is where users can delete one of their food items
 @favorite_foods.route('/<food_id>', methods=['DELETE'])
@@ -96,7 +125,7 @@ def delete_favorite_food(food_id):
     try:
         favorite_food_to_delete = FavoriteFood.get(FavoriteFood.id == food_id)
 
-        # throws a access denied error if the user is not the owner of this favorite food instane
+        # throws a access denied error if the user is not the owner of this favorite food instance
         try:
             if not favorite_food_to_delete.user_is_owner(current_user.id):
                 raise ResourceAccessDenied()

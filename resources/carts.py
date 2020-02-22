@@ -113,7 +113,6 @@ def delete_users_cart(cart_id):
 
 # checkout route
 @carts.route('/<cart_id>', methods=["GET"])
-# the user must be logged in
 @login_required
 def get_total_price_of_items(cart_id):
     try:
