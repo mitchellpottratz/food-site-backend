@@ -15,3 +15,9 @@ class BaseModel(Model):
     class Meta: 
         database = DATABASE
 
+    # checks if the user is the owner of a model instance
+    def user_is_owner(self, user_id):
+        if self.user:
+            if self.user.id != user_id:
+                return False
+            return True
