@@ -28,19 +28,18 @@ def ping():
 @favorite_foods.route('/', methods=['GET'])
 @login_required
 def get_all_favorite_foods():
-    all_favorite_foods = FavoriteFood.select().where(FavoriteFood.user = current_user.id)
+    all_favorite_foods = FavoriteFood.select().where(FavoriteFood.user == current_user.id)
 
     # converts all of the favorite foods model instances to dictionaries
     all_favorite_foods_dict = [model_to_dict(favorite_food) for favorite_food in all_favorite_foods]
 
     return jsonify(
-        status=all_favorite_foods_dict,
+        data=all_favorite_foods_dict,
         status={
             'code': 200,
             'message': 'Successfully found resources.'
         }
     )
-
 
 
 # Create Route 

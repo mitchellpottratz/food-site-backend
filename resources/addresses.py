@@ -52,7 +52,6 @@ def get_users_addresses():
         )
 
 
-
 # Create Route
 # this route is where users can create a new delivery address
 @addresses.route('/', methods=['POST'])
