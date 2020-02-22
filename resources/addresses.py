@@ -132,7 +132,7 @@ def delete_address(address_id):
             if not address.user_is_owner(current_user.id):
                 raise ResourceAccessDenied()
         except ResourceAccessDenied as e:
-            e.get_json_response()
+            return e.get_json_response()
 
         return jsonify(
             data={},

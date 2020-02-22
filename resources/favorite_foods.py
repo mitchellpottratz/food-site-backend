@@ -90,6 +90,15 @@ def create_favorite_food():
 def delete_favorite_food(food_id):
     try:
         favorite_food_to_delete = FavoriteFood.get(FavoriteFood.id == food_id)
+
+        # throws a access denied error if the user is not the owner of this favorite food instane
+        try:
+            if not favorite_food_to_delete.user_is_owner(current_user.id):
+                raise ResourceAccessDenied()
+        except ResourceAccessDenied as e:
+            return e.get_json_response()
+
+        # now that the current user is verified as the model instance owner it gets deleted
         favorite_food_to_delete.delete_instance()
 
         return jsonify(

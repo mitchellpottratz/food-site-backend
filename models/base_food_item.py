@@ -18,9 +18,6 @@ class BaseFoodItem(BaseModel):
     description = CharField(max_length=500, null=True)
     price = FloatField()
     instructions = CharField(max_length=500, null=True)
-
-
     
-
 
 
