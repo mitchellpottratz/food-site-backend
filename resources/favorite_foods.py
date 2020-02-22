@@ -33,16 +33,35 @@ def create_favorite_food():
     data = request.get_json()
     data['user'] = current_user.id 
 
-    new_favorite_food = FavoriteFood.create(**data)
-    new_favorite_food_dict = model_to_dict(new_favorite_food)
+    # checks if the favorite food item the user is creating already exists
+    try:
+        existing_favorite_food = FavoriteFood.get(
+            FavoriteFood.user == current_user.id,
+            FavoriteFood.food_item_api_key == data['food_item_api_key']
+        )
 
-    return jsonify(
-        data=new_favorite_food_dict,
-        status={
-            'code': 201,
-            'message': 'Resource successfully created.'
-        }
-    )
+        return jsonify(
+            data={},
+            status={
+                'code': 403,
+                'message': 'Resource already exists.'
+            }
+        )
+    
+    # if the favorite food item doesnt already exist then a new one is created
+    except DoesNotExist:
+        new_favorite_food = FavoriteFood.create(**data)
+
+        new_favorite_food_dict = model_to_dict(new_favorite_food)
+        del new_favorite_food_dict['user']['password']
+
+        return jsonify(
+            data=new_favorite_food_dict,
+            status={
+                'code': 201,
+                'message': 'Resource successfully created.'
+            }
+        )
 
    
 
