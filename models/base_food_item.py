@@ -18,7 +18,7 @@ class BaseFoodItem(BaseModel):
     name = CharField(max_length=155)
     description = CharField(max_length=500)
     price = DecimalField()
-    instructions = CharField(max_length=500)
+    instructions = CharField(max_length=500, null=True)
 
 
     '''
