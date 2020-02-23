@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
 from exceptions.resource_access_denied import ResourceAccessDenied
+from flask_cors import cross_origin
 
 # model imports 
 from models.address import Address 
@@ -66,6 +67,7 @@ def get_users_addresses():
 @addresses.route('/', methods=['POST'])
 @login_required
 def create_address():
+    print('in create address route')
     data = request.get_json()
 
     # attach the users id to the dictionary to specify which user is creating the address

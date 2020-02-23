@@ -40,7 +40,7 @@ class Server:
             return os.environ['ORIGIN']
 
     def setup_cors(self):
-        CORS(self.app)
+        CORS(self.app, resources={r"/*": {"origins": "*"}})
 
     # sets up flask_login
     def setup_login_manager(self):
@@ -50,7 +50,7 @@ class Server:
     def register_blueprints(self):
         for blueprint in self.blueprints:
             self.app.register_blueprint(blueprint[0], url_prefix=blueprint[1])
-            CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
+            # CORS(blueprint[0], origins=[self.origin], supports_credentials=True)
 
     def start(self): 
         print('DEBUG:', self.DEBUG)
