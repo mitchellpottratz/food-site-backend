@@ -57,8 +57,29 @@ def show_customization_options():
 @food_item_customizations.route('/<food_item_id>', methods=['GET'])
 @login_required
 def show_food_item_customizations(food_item_id):
-    pass
-    
+    try:
+        # queries for all of the food customization that have been applied to a food item
+        customizations = FoodItemCustomization.select().where(FoodItemCustomization.food_item == food_item_id)
+
+        # converts all of the model instances to dictionaries
+        customizations_dict = [model_to_dict(customization) for customization in customizations]
+
+        return jsonify(
+            data=customizations_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resources.'
+            }
+        )
+
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist'
+            }
+        )
 
 
 # Create Route
