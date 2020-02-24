@@ -32,7 +32,7 @@ def create_customization():
 
     # checks if the food item being customized exists
     try:
-        food_item = FoodItem.get(FoodItem.id == data['food_item'])
+        food_item = FoodItem.get(FoodItem.id == data['food_item_id'])
     except DoesNotExist:
         return jsonify(
             data={},
@@ -42,8 +42,20 @@ def create_customization():
             }
         )
 
-    food_item_customization = FoodItemCustomization.create(**data)
-    
+    # now the food item customization gets createds
+    customization = FoodItemCustomization.create(
+        food_item=data['food_item_id'], api_key=data['apiKey'],
+        name=data['name'], price=data['price'], count=data['count']
+    )
+    customization_dict = model_to_dict(customization)
+
+    return jsonify(
+        data=customization_dict,
+        status={
+            'code': 201,
+            'message': 'Successfully created resource.'
+        }
+    )
 
 
     
