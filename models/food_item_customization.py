@@ -13,7 +13,8 @@ class FoodItemCustomization(BaseModel):
     food_item = ForeignKeyField(FoodItem, backref='customizations')
     selection_api_key = CharField(max_length=155)
     choice_api_key = CharField(max_length=155)
-    name = CharField(max_length=155)
+    selection_name = CharField(max_length=255)
+    choice_name = CharField(max_length=255)
     price = FloatField()
     count = IntegerField(null=True)
 
