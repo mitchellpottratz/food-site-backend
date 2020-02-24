@@ -5,6 +5,7 @@ from peewee import DoesNotExist
 from exceptions.resource_access_denied import ResourceAccessDenied
 
 from models.cart import Cart 
+from models.food_item import FoodItem
 from models.user import User  
 
 carts = Blueprint('carts', 'carts')
@@ -29,6 +30,7 @@ def ping():
 def show_users_cart(cart_id):
     try:
         cart = Cart.get(id=cart_id)
+        print(cart.food_items)
 
         # throws an exception if the user is not the user of the cart
         try:

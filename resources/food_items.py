@@ -28,6 +28,35 @@ def ping():
     )
 
 
+# Show Route
+# this route is where a user can view a single food item in their cart
+@food_items.route('/<food_item_id>', methods=['GET'])
+@login_required
+def show_food_item(food_item_id):
+    try:
+        food_item = FoodItem.get(FoodItem.id == food_item_id)
+        
+        food_item_dict = model_to_dict(food_item)
+        del food_item_dict['cart']['user']['password']
+
+        return jsonify(
+            data=food_item_dict,
+            status={
+                'code': 200,
+                'message': 'Successfully got resource.'
+            }
+        )
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }
+        )
+
+
+
 # Create Route
 # this route create a new food item from a food item from a restaurant and adds
 # it to the users cart

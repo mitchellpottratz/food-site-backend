@@ -9,7 +9,7 @@ This model represents a food item that is in a users cart from the EatStreet api
 
 
 class FoodItem(BaseFoodItem):
-    cart = ForeignKeyField(Cart, backref='food-items')
+    cart = ForeignKeyField(Cart, backref='food_items')
 
 
 
