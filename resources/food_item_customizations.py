@@ -28,11 +28,13 @@ def ping():
     )
 
 
-# Show Route
+# Index Route
 # this route is where a user can view all of the customizations options for a food item
-@food_item_customizations.route('/<food_item_api_key>', methods=['GET'])
+@food_item_customizations.route('/', methods=['GET'])
 @login_required
-def show_customization_options(food_item_api_key):
+def show_customization_options():
+    data = request.get_json()
+    food_item_api_key = data['food_item_api_key']
 
     # makes api call to get all customizable options for a food item
     response = requests.get(
@@ -41,7 +43,6 @@ def show_customization_options(food_item_api_key):
     )
     customization_options = response.json()
 
-
     return jsonify(
         data=customization_options,
         status={
@@ -49,6 +50,15 @@ def show_customization_options(food_item_api_key):
             'message': 'Successfully got resource.'
         }
     )
+
+
+# Show Route
+# this route shows all of the customizatons that have been applied for a food item
+@food_item_customizations.route('/<food_item_id>', methods=['GET'])
+@login_required
+def show_food_item_customizations(food_item_id):
+    pass
+    
 
 
 # Create Route
@@ -89,6 +99,8 @@ def create_customization():
             'message': 'Successfully created resource.'
         }
     )
+
+
 
 
     
