@@ -75,7 +75,8 @@ def create_customization():
         food_item=data['food_item_id'], 
         selection_api_key=data['selection_api_key'],
         choice_api_key=data['choice_api_key'],
-        name=data['name'],
+        selection_name=data['selection_name'],
+        choice_name=data['choice_name'],
         price=data['price'],
         count=data['count']
     )
