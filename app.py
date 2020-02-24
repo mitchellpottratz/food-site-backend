@@ -1,5 +1,3 @@
-print('----- in app.py -----')
-
 from flask import g
 from flask_login import current_user
 from models.user import User
@@ -68,8 +66,6 @@ def after_request(response):
 
 
 if __name__ == '__main__':
-    print('----- Before initializing database tables -----')
     database.initialize_tables()
-    print('----- After initializing database tables -----')
     app = server.start()
 
