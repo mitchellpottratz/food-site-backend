@@ -28,24 +28,34 @@ def ping():
     )
 
 
-# Create Route - NOT FINISHED
+# Create Route
 # this route create a new food item from a food item from a restaurant and adds
 # it to the users cart
 @food_items.route('/', methods=['POST'])
 @login_required
 def create_food_item():
     data = request.get_json()
-    restaurant_api_key = data['restaurant_api_key']
-    food_item_api_key = data['food_item_api_key']
 
-    # makes api call to get all the items in the restaurants menu
-    menu = FoodItem.get_restaurants_menu(restaurant_api_key)
+    # tries to get the users cart, exception thrown if users cart doesnt exist
+    try:
+        cart = Cart.get(user=current_user.id)
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist.'
+            }
+        )
 
-    # gets the food item from the resturants menu
-    food_item = FoodItem.get_food_item(menu, food_item_api_key)
+    # adds the users cart to the dictionary because FoodItem needs a cart id to be created
+    data['cart'] = cart.id
+
+    food_item = FoodItem.create(**data)    
+    food_item_dict = model_to_dict(food_item)
 
     return jsonify(
-        data=menu,
+        data=food_item_dict,
         status={
             'code': 201,
             'message': 'Successfully created resource.'
@@ -64,7 +74,7 @@ def get_food_item_customizations(food_item_api_key):
     )
     customization_options = response.json()
 
-    
+
     return jsonify(
         data=customization_options,
         status={
