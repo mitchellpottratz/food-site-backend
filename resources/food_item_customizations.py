@@ -10,7 +10,6 @@ from models.food_item import FoodItem
 
 import requests
 
-
 food_item_customizations = Blueprint('food_item_customizations', 'food_item_customizations')
 
 # EatStreet food item customizations api url
@@ -71,10 +70,14 @@ def create_customization():
             }
         )
 
-    # now the food item customization gets createds
+    # now the food item customization gets created
     customization = FoodItemCustomization.create(
-        food_item=data['food_item_id'], api_key=data['apiKey'],
-        name=data['name'], price=data['price'], count=data['count']
+        food_item=data['food_item_id'], 
+        selection_api_key=data['selection_api_key'],
+        choice_api_key=data['choice_api_key'],
+        name=data['name'],
+        price=data['price'],
+        count=data['count']
     )
     customization_dict = model_to_dict(customization)
 
