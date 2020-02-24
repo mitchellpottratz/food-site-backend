@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from playhouse.shortcuts import model_to_dict
@@ -7,8 +8,13 @@ from exceptions.resource_access_denied import ResourceAccessDenied
 from models.food_item import FoodItem 
 from models.cart import Cart
 
+import requests
+import json
+
 food_items = Blueprint('food_items', 'food_items')
 
+# EatStreet food item customizations api url
+customizations_api_url = 'https://eatstreet.com/publicapi/v1/customizations/'
 
 # Ping Route
 @food_items.route('/ping', methods=['GET'])
@@ -45,6 +51,25 @@ def create_food_item():
             'message': 'Successfully created resource.'
         }
     )
+
+
+# gets all of the food customization options for a food item
+@food_items.route('/<food_item_api_key>/customizations', methods=['GET'])
+def get_food_item_customizations(food_item_api_key):
+    response = requests.get(
+        customizations_api_url + food_item_api_key,
+        headers={'X-Access-Token': os.environ['API_KEY']}
+    )
+    customization_options = response.json()
+
+    return jsonify(
+        data=customization_options,
+        status={
+            'code': 200,
+            'message': 'Successfully got resource.'
+        }
+    )
+
 
 # search food items route
 @food_items.route('/search', methods=["POST"])
