@@ -1,4 +1,3 @@
-import os
 from peewee import *
 from .base_food_item import BaseFoodItem
 from .cart import Cart

@@ -56,12 +56,15 @@ def create_food_item():
 # gets all of the food customization options for a food item
 @food_items.route('/<food_item_api_key>/customizations', methods=['GET'])
 def get_food_item_customizations(food_item_api_key):
+
+    # makes api call to get all customizable options for a food item
     response = requests.get(
         customizations_api_url + food_item_api_key,
         headers={'X-Access-Token': os.environ['API_KEY']}
     )
     customization_options = response.json()
 
+    
     return jsonify(
         data=customization_options,
         status={
