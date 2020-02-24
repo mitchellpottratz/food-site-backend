@@ -67,9 +67,9 @@ def after_request(response):
     return response
 
 
-
-print('----- Before initializing database tables -----')
-database.initialize_tables()
-print('----- After initializing database tables -----')
-app = server.start()
+if __name__ == '__main__':
+    print('----- Before initializing database tables -----')
+    database.initialize_tables()
+    print('----- After initializing database tables -----')
+    app = server.start()
 
