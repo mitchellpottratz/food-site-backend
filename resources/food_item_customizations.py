@@ -5,6 +5,7 @@ from peewee import DoesNotExist
 from exceptions.resource_access_denied import ResourceAccessDenied
 
 from models.food_item_customization import FoodItemCustomization
+from models.food_item import FoodItem
 
 
 food_item_customizations = Blueprint('food_item_customizations', 'food_item_customizations')
@@ -29,7 +30,23 @@ def ping():
 def create_customization():
     data = request.get_json()
 
-    pass
+    # checks if the food item being customized exists
+    try:
+        food_item = FoodItem.get(FoodItem.id == data['food_item'])
+    except DoesNotExist:
+        return jsonify(
+            data={},
+            status={
+                'code': 404,
+                'message': 'Resource does not exist'
+            }
+        )
+
+    food_item_customization = FoodItemCustomization.create(**data)
+    
+
+
+    
 
 
 
