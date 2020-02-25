@@ -33,8 +33,7 @@ def ping():
 @food_item_customizations.route('/', methods=['GET'])
 @login_required
 def show_customization_options():
-    data = request.get_json()
-    food_item_api_key = data['food_item_api_key']
+    food_item_api_key = request.args.get('food_item_api_key')
 
     # makes api call to get all customizable options for a food item
     response = requests.get(
