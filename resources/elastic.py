@@ -7,10 +7,10 @@ es = Elasticsearch()
 # app = Flask(__name__)
 
 # # blueprint for User
-elasticsearch = Blueprint('elasticsearch', 'elasticsearch')
+elastic = Blueprint('elasticsearch', 'elasticsearch')
 
 # test route 
-# @elasticsearch.route('/', methods=['GET'])
+# @elastic.route('/', methods=['GET'])
 # def index():
 #     results = es.get(index='contents', doc_type='title', id='my-new-slug')
 #     return jsonify(results['_source'])

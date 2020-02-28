@@ -16,7 +16,7 @@ from resources.food_items import food_items
 from resources.favorite_foods import favorite_foods
 from resources.carts import carts
 from resources.food_item_customizations import food_item_customizations
-from resources.elastic import elasticsearch
+from resources.elastic import elastic
 
 # model imports 
 from models.base import BaseModel
@@ -37,7 +37,7 @@ server = Server([[users, '/api/v1/users'],
                  [favorite_foods, '/api/v1/favorite-foods'],
                  [carts, '/api/v1/carts'],
                  [food_item_customizations, '/api/v1/food-item-customizations'],
-                 [elasticsearch, '/api/v1/elasticsearch']])
+                 [elastic, '/api/v1/elasticsearch']])
 
 # creates an instance of the database                
 database = Database([BaseModel, User, Address, Cart, BaseFoodItem, FoodItem, FavoriteFood, FoodItemCustomization])
