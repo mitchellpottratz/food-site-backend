@@ -16,7 +16,7 @@ from resources.food_items import food_items
 from resources.favorite_foods import favorite_foods
 from resources.carts import carts
 from resources.food_item_customizations import food_item_customizations
-from resources.elasticsearch import elasticsearch
+from resources.elastic import elasticsearch
 
 # model imports 
 from models.base import BaseModel
