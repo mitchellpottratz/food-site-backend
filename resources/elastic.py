@@ -7,7 +7,7 @@ es = Elasticsearch()
 # app = Flask(__name__)
 
 # # blueprint for User
-elastic = Blueprint('elasticsearch', 'elasticsearch')
+elastic = Blueprint('elastic', 'elastic')
 
 # test route 
 # @elastic.route('/', methods=['GET'])
