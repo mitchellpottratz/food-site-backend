@@ -36,6 +36,8 @@ def get_restaurants_near_user():
     results = elasticsearch_client.search(
         index='restaurants',
         body={
+            'from': 0,
+            'size': 100,
             'query': {
                 'bool': {
                     'must': {
