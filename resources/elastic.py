@@ -1,22 +1,27 @@
-# from datetime import datetime
-# from flask import Flask, jsonify, request, Blueprint
-# from elasticsearch import Elasticsearch
-# import warnings
+from datetime import datetime
+from flask import Flask, jsonify, request, Blueprint
+from elasticsearch import Elasticsearch
+import warnings
 
-# # initializes elasticsearch and flask modules
+elastic = Blueprint('elastic', 'elastic')
 
-# try:
-#     es = Elasticsearch()
-# except ImportError:
-#     warnings.warn('Elasticsearch is not installed.')
+elasticsearch_client = Elasticsearch(['http://35.184.144.209:9200/'])
 
 
 
-# # # blueprint for User
-# elastic = Blueprint('elastic', 'elastic')
+@elastic.route('/restaurants', methods=['GET'])
+def all_restaurants():
+    results = elasticsearch_client.search(
+        index='restaurants',
+        body={
+            'from': 0,
+            'size': 100,
+            'query': {
+                'match_all': {}
+            }
+        }
+    )
+    return jsonify(results)
 
-# test route 
-# @elastic.route('/', methods=['GET'])
-# def index():
-#     results = es.get(index='contents', doc_type='title', id='my-new-slug')
-#     return jsonify(results['_source'])
+
+
