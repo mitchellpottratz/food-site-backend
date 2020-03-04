@@ -39,23 +39,19 @@ def get_restaurants_near_user():
             'size': 100,
             'query': {
                 'bool': {
-                    'must': {
-                        'range': {
-                            'latitude': {
-                                'lte': str(clients_latitude + 0.2),
-                                'gte': str(clients_latitude - 0.2),
-                            },
+                    'filter': {
+                        'geo_distance': {
+                            'distance': "15km",
+                            'location': {
+                                'lat': clients_latitude,
+                                'lon': clients_longitude
+                            }
                         }
                     },
                     'must': {
-                        'range': {
-                            'longitude': {
-                                'lte': str(clients_longitude + 0.2),
-                                'gte': str(clients_longitude - 0.2)
-                            }
-                        }
-                    }
-                }
+                        'match_all': {}
+                    } 
+                }   
             }
         }
     ) 
