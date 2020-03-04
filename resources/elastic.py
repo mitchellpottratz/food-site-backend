@@ -8,8 +8,8 @@ elastic = Blueprint('elastic', 'elastic')
 elasticsearch_client = Elasticsearch(['http://35.184.144.209:9200/'])
 
 
-
-@elastic.route('/restaurants', methods=['GET'])
+# Ping route
+@elastic.route('/restaurants/ping', methods=['GET'])
 def all_restaurants():
     results = elasticsearch_client.search(
         index='restaurants',
@@ -24,8 +24,7 @@ def all_restaurants():
     return jsonify(results)
 
 
-
-# gets all restaurants within approximately 20 miles of the users location
+# returns all of the restaurants near a users location
 @elastic.route('/restaurants/nearme', methods=['GET'])
 def get_restaurants_near_user():
 
@@ -43,16 +42,16 @@ def get_restaurants_near_user():
                     'must': {
                         'range': {
                             'latitude': {
-                                'lte': str(clients_latitude + 0.3),
-                                'gte': str(clients_latitude - 0.3),
+                                'lte': str(clients_latitude + 0.2),
+                                'gte': str(clients_latitude - 0.2),
                             },
                         }
                     },
                     'must': {
                         'range': {
                             'longitude': {
-                                'lte': str(clients_longitude + 0.3),
-                                'gte': str(clients_longitude - 0.3)
+                                'lte': str(clients_longitude + 0.2),
+                                'gte': str(clients_longitude - 0.2)
                             }
                         }
                     }
